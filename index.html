@@ -3,332 +3,340 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Centro de Evaluaciones Personales</title>
+    <title>Centro de Evaluación de Business Bots</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         body { 
             font-family: 'Inter', sans-serif; 
-            background: #0a0a0a;
-            background-image: 
-                radial-gradient(circle at 25% 25%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 75% 75%, rgba(255, 119, 198, 0.1) 0%, transparent 50%);
-        }
-        .premium-gradient { 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background: linear-gradient(135deg, #000000 0%, #333333 100%);
+            min-height: 100vh;
         }
         .card-hover:hover { 
-            transform: translateY(-12px) scale(1.02); 
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: translateY(-8px); 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .premium-shadow { 
-            box-shadow: 
-                0 0 0 1px rgba(255, 255, 255, 0.05),
-                0 25px 50px -12px rgba(255, 255, 255, 0.25),
-                0 0 100px rgba(255, 255, 255, 0.1);
+        .minimal-shadow { 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        .premium-shadow:hover {
-            box-shadow: 
-                0 0 0 1px rgba(255, 255, 255, 0.1),
-                0 35px 70px -12px rgba(255, 255, 255, 0.4),
-                0 0 150px rgba(255, 255, 255, 0.2);
+        .minimal-shadow:hover {
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 0 15px 25px rgba(0, 0, 0, 0.3);
         }
-        .category-tech { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        .category-personal { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
-        .category-business { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
-        .category-health { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        .category-indicator {
+            width: 4px;
+            height: 60px;
+            border-radius: 2px;
         }
-        .text-glow {
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-        }
+        .category-tech { background: linear-gradient(135deg, #000000 0%, #333333 100%); }
+        .category-personal { background: linear-gradient(135deg, #333333 0%, #666666 100%); }
+        .category-business { background: linear-gradient(135deg, #666666 0%, #999999 100%); }
+        .category-health { background: linear-gradient(135deg, #999999 0%, #cccccc 100%); }
+        .category-productivity { background: linear-gradient(135deg, #cccccc 0%, #ffffff 100%); }
+        .category-finance { background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%); }
         .lang-btn {
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.2);
         }
         .lang-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            color: #000000;
         }
         .lang-btn.active {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(255, 255, 255, 1);
+            color: #000000;
+        }
+        .geometric-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 18px;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        .option-button {
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .option-button:hover {
+            transform: translateX(4px);
+            border-color: #000000;
+            background-color: #f9fafb;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
 <body class="min-h-screen">
     <!-- Header -->
-    <div class="relative py-20">
+    <div class="relative py-24">
         <!-- Language Selector -->
-        <div class="absolute top-6 right-6 z-10">
-            <div class="flex space-x-2">
-                <button onclick="changeLanguage('es')" class="lang-btn active px-3 py-2 rounded-lg text-white text-sm font-medium">ES</button>
-                <button onclick="changeLanguage('en')" class="lang-btn px-3 py-2 rounded-lg text-white text-sm font-medium">EN</button>
-                <button onclick="changeLanguage('fr')" class="lang-btn px-3 py-2 rounded-lg text-white text-sm font-medium">FR</button>
-                <button onclick="changeLanguage('it')" class="lang-btn px-3 py-2 rounded-lg text-white text-sm font-medium">IT</button>
-                <button onclick="changeLanguage('de')" class="lang-btn px-3 py-2 rounded-lg text-white text-sm font-medium">DE</button>
+        <div class="absolute top-8 right-8 z-10">
+            <div class="flex space-x-1">
+                <button onclick="changeLanguage('es')" class="lang-btn active px-4 py-2 rounded-lg text-white text-sm font-medium">ES</button>
+                <button onclick="changeLanguage('en')" class="lang-btn px-4 py-2 rounded-lg text-white text-sm font-medium">EN</button>
+                <button onclick="changeLanguage('fr')" class="lang-btn px-4 py-2 rounded-lg text-white text-sm font-medium">FR</button>
+                <button onclick="changeLanguage('it')" class="lang-btn px-4 py-2 rounded-lg text-white text-sm font-medium">IT</button>
+                <button onclick="changeLanguage('de')" class="lang-btn px-4 py-2 rounded-lg text-white text-sm font-medium">DE</button>
             </div>
         </div>
         
-        <div class="max-w-6xl mx-auto px-4 text-center">
-            <div class="mb-8">
-                <h1 class="text-7xl font-black text-white text-glow mb-6" id="mainTitle">Centro de Evaluación de Business Bots</h1>
-                <p class="text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed" id="mainSubtitle">Descubre tu potencial con 8 tests profesionales diseñados para tu crecimiento personal y profesional</p>
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            <div class="mb-16">
+                <h1 class="text-6xl font-light text-white mb-8 tracking-tight" id="mainTitle">Centro de Evaluación de Business Bots</h1>
+                <p class="text-xl text-white/80 mb-16 max-w-3xl mx-auto leading-relaxed font-light" id="mainSubtitle">Descubre tu potencial con 8 tests profesionales diseñados para tu crecimiento personal y profesional</p>
             </div>
             
-            <div class="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-                <div class="glass-effect rounded-2xl p-6 text-center">
-                    <div class="text-3xl mb-3">⚡</div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2" id="feature1Title">Resultados Instantáneos</h3>
-                    <p class="text-gray-700 text-sm" id="feature1Desc">Obtén tu evaluación al momento</p>
+            <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 text-center border border-white/20 minimal-shadow">
+                    <div class="geometric-icon bg-black/80 mx-auto mb-6">01</div>
+                    <h3 class="text-lg font-semibold text-white mb-3" id="feature1Title">Resultados Instantáneos</h3>
+                    <p class="text-white/70 text-sm leading-relaxed" id="feature1Desc">Obtén tu evaluación al momento</p>
                 </div>
-                <div class="glass-effect rounded-2xl p-6 text-center">
-                    <div class="text-3xl mb-3">📊</div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2" id="feature2Title">Análisis Detallado</h3>
-                    <p class="text-gray-700 text-sm" id="feature2Desc">Insights profundos y personalizados</p>
+                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 text-center border border-white/20 minimal-shadow">
+                    <div class="geometric-icon bg-black/80 mx-auto mb-6">02</div>
+                    <h3 class="text-lg font-semibold text-white mb-3" id="feature2Title">Análisis Detallado</h3>
+                    <p class="text-white/70 text-sm leading-relaxed" id="feature2Desc">Insights profundos y personalizados</p>
                 </div>
-                <div class="glass-effect rounded-2xl p-6 text-center">
-                    <div class="text-3xl mb-3">🎯</div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2" id="feature3Title">Recomendaciones</h3>
-                    <p class="text-gray-700 text-sm" id="feature3Desc">Planes de acción específicos</p>
+                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 text-center border border-white/20 minimal-shadow">
+                    <div class="geometric-icon bg-black/80 mx-auto mb-6">03</div>
+                    <h3 class="text-lg font-semibold text-white mb-3" id="feature3Title">Recomendaciones</h3>
+                    <p class="text-white/70 text-sm leading-relaxed" id="feature3Desc">Planes de acción específicos</p>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Tests Grid -->
-    <div class="max-w-7xl mx-auto px-4 py-20">
-        <div class="text-center mb-16">
-            <h2 class="text-5xl font-black text-white text-glow mb-4" id="testsTitle">Evaluaciones Disponibles</h2>
-            <p class="text-xl text-gray-400 max-w-3xl mx-auto" id="testsSubtitle">Selecciona cualquier test para comenzar tu evaluación personalizada</p>
-        </div>
-        
-        <div class="grid md:grid-cols-2 xl:grid-cols-2 gap-8">
+    <div class="bg-white min-h-screen py-20">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-20">
+                <h2 class="text-4xl font-light text-gray-900 mb-6 tracking-tight" id="testsTitle">Evaluaciones Disponibles</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto font-light" id="testsSubtitle">Selecciona cualquier test para comenzar tu evaluación personalizada</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
             
             <!-- Test 1: Inteligencia Emocional -->
-            <div class="card-hover glass-effect rounded-3xl premium-shadow overflow-hidden">
-                <div class="category-personal h-1"></div>
-                <div class="p-8">
-                    <div class="flex items-center mb-6">
-                        <div class="w-16 h-16 bg-gradient-to-br from-pink-500 to-red-500 rounded-2xl flex items-center justify-center text-2xl mr-6">🧠</div>
-                        <div>
-                            <h3 class="text-2xl font-black text-gray-900" id="test1Title">Inteligencia Emocional</h3>
-                            <p class="text-sm text-gray-600 font-medium" id="test1Category">Desarrollo Personal • 5 preguntas</p>
+            <div class="card-hover bg-white rounded-2xl minimal-shadow overflow-hidden border border-gray-100">
+                <div class="flex">
+                    <div class="category-indicator category-personal"></div>
+                    <div class="flex-1 p-8">
+                        <div class="flex items-start justify-between mb-6">
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 mb-2" id="test1Title">Inteligencia Emocional</h3>
+                                <p class="text-sm text-gray-500 font-medium" id="test1Category">Desarrollo Personal • 5 preguntas</p>
+                            </div>
+                            <div class="geometric-icon category-personal text-white">EI</div>
                         </div>
-                    </div>
-                    <p class="text-gray-700 mb-8 leading-relaxed" id="test1Desc">Evalúa tu capacidad para reconocer, entender y gestionar emociones propias y ajenas. Fundamental para el liderazgo y las relaciones interpersonales.</p>
-                    <div class="flex justify-between items-center">
-                        <div class="flex items-center text-sm text-gray-600">
-                            <span class="mr-2">⏱️</span>
-                            <span id="test1Time">5-7 minutos</span>
+                        <p class="text-gray-600 mb-8 leading-relaxed text-sm" id="test1Desc">Evalúa tu capacidad para reconocer, entender y gestionar emociones propias y ajenas. Fundamental para el liderazgo y las relaciones interpersonales.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500" id="test1Time">3-5 minutos</span>
+                            <button onclick="startTest('emotional')" class="bg-gray-900 text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors duration-200">
+                                <span id="startBtn1">Comenzar Test</span>
+                            </button>
                         </div>
-                        <button onclick="startTest('emotional')" class="bg-gradient-to-r from-pink-500 to-red-500 text-white px-8 py-4 rounded-xl font-bold hover:from-pink-600 hover:to-red-600 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                            <span id="startBtn1">Comenzar Test</span>
-                        </button>
                     </div>
                 </div>
             </div>
 
             <!-- Test 2: Estilo de Liderazgo -->
-            <div class="card-hover glass-effect rounded-3xl premium-shadow overflow-hidden">
-                <div class="category-business h-1"></div>
-                <div class="p-8">
-                    <div class="flex items-center mb-6">
-                        <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center text-2xl mr-6">👑</div>
-                        <div>
-                            <h3 class="text-2xl font-black text-gray-900" id="test2Title">Estilo de Liderazgo</h3>
-                            <p class="text-sm text-gray-600 font-medium" id="test2Category">Liderazgo • 5 preguntas</p>
+            <div class="card-hover bg-white rounded-2xl minimal-shadow overflow-hidden border border-gray-100">
+                <div class="flex">
+                    <div class="category-indicator category-business"></div>
+                    <div class="flex-1 p-8">
+                        <div class="flex items-start justify-between mb-6">
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 mb-2" id="test2Title">Estilo de Liderazgo</h3>
+                                <p class="text-sm text-gray-500 font-medium" id="test2Category">Liderazgo • 5 preguntas</p>
+                            </div>
+                            <div class="geometric-icon category-business text-white">LD</div>
                         </div>
-                    </div>
-                    <p class="text-gray-700 mb-8 leading-relaxed" id="test2Desc">Identifica tu estilo natural de liderazgo y aprende cómo potenciar tus fortalezas para inspirar y guiar equipos de manera más efectiva.</p>
-                    <div class="flex justify-between items-center">
-                        <div class="flex items-center text-sm text-gray-600">
-                            <span class="mr-2">⏱️</span>
-                            <span id="test2Time">4-6 minutos</span>
+                        <p class="text-gray-600 mb-8 leading-relaxed text-sm" id="test2Desc">Identifica tu estilo natural de liderazgo y aprende cómo potenciar tus fortalezas para inspirar y guiar equipos de manera más efectiva.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500" id="test2Time">3-5 minutos</span>
+                            <button onclick="startTest('leadership')" class="bg-gray-900 text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors duration-200">
+                                <span id="startBtn2">Comenzar Test</span>
+                            </button>
                         </div>
-                        <button onclick="startTest('leadership')" class="bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-8 py-4 rounded-xl font-bold hover:from-blue-600 hover:to-cyan-600 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                            <span id="startBtn2">Comenzar Test</span>
-                        </button>
                     </div>
                 </div>
             </div>
 
             <!-- Test 3: Personalidad DISC -->
-            <div class="card-hover glass-effect rounded-3xl premium-shadow overflow-hidden">
-                <div class="category-personal h-1"></div>
-                <div class="p-8">
-                    <div class="flex items-center mb-6">
-                        <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-2xl mr-6">🎯</div>
-                        <div>
-                            <h3 class="text-2xl font-black text-gray-900" id="test3Title">Personalidad DISC</h3>
-                            <p class="text-sm text-gray-600 font-medium" id="test3Category">Personalidad • 8 preguntas</p>
+            <div class="card-hover bg-white rounded-2xl minimal-shadow overflow-hidden border border-gray-100">
+                <div class="flex">
+                    <div class="category-indicator category-personal"></div>
+                    <div class="flex-1 p-8">
+                        <div class="flex items-start justify-between mb-6">
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 mb-2" id="test3Title">Personalidad DISC</h3>
+                                <p class="text-sm text-gray-500 font-medium" id="test3Category">Personalidad • 8 preguntas</p>
+                            </div>
+                            <div class="geometric-icon category-personal text-white">DS</div>
                         </div>
-                    </div>
-                    <p class="text-gray-700 mb-8 leading-relaxed" id="test3Desc">Descubre tu perfil de personalidad según el modelo DISC: Dominancia, Influencia, Estabilidad y Conformidad. Mejora tu comunicación y trabajo en equipo.</p>
-                    <div class="flex justify-between items-center">
-                        <div class="flex items-center text-sm text-gray-600">
-                            <span class="mr-2">⏱️</span>
-                            <span id="test3Time">6-8 minutos</span>
+                        <p class="text-gray-600 mb-8 leading-relaxed text-sm" id="test3Desc">Descubre tu perfil de personalidad según el modelo DISC: Dominancia, Influencia, Estabilidad y Conformidad. Mejora tu comunicación y trabajo en equipo.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500" id="test3Time">4-6 minutos</span>
+                            <button onclick="startTest('disc')" class="bg-gray-900 text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors duration-200">
+                                <span id="startBtn3">Comenzar Test</span>
+                            </button>
                         </div>
-                        <button onclick="startTest('disc')" class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-4 rounded-xl font-bold hover:from-purple-600 hover:to-pink-600 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                            <span id="startBtn3">Comenzar Test</span>
-                        </button>
                     </div>
                 </div>
             </div>
 
             <!-- Test 4: Nivel de Estrés -->
-            <div class="card-hover glass-effect rounded-3xl premium-shadow overflow-hidden">
-                <div class="category-health h-1"></div>
-                <div class="p-8">
-                    <div class="flex items-center mb-6">
-                        <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-teal-500 rounded-2xl flex items-center justify-center text-2xl mr-6">🌿</div>
-                        <div>
-                            <h3 class="text-2xl font-black text-gray-900" id="test4Title">Nivel de Estrés</h3>
-                            <p class="text-sm text-gray-600 font-medium" id="test4Category">Bienestar • 5 preguntas</p>
+            <div class="card-hover bg-white rounded-2xl minimal-shadow overflow-hidden border border-gray-100">
+                <div class="flex">
+                    <div class="category-indicator category-health"></div>
+                    <div class="flex-1 p-8">
+                        <div class="flex items-start justify-between mb-6">
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 mb-2" id="test4Title">Nivel de Estrés</h3>
+                                <p class="text-sm text-gray-500 font-medium" id="test4Category">Bienestar • 5 preguntas</p>
+                            </div>
+                            <div class="geometric-icon category-health text-white">ST</div>
                         </div>
-                    </div>
-                    <p class="text-gray-700 mb-8 leading-relaxed" id="test4Desc">Evalúa tu nivel actual de estrés y recibe recomendaciones personalizadas para mejorar tu bienestar mental y físico en el trabajo y la vida personal.</p>
-                    <div class="flex justify-between items-center">
-                        <div class="flex items-center text-sm text-gray-600">
-                            <span class="mr-2">⏱️</span>
-                            <span id="test4Time">4-6 minutos</span>
+                        <p class="text-gray-600 mb-8 leading-relaxed text-sm" id="test4Desc">Evalúa tu nivel actual de estrés y recibe recomendaciones personalizadas para mejorar tu bienestar mental y físico en el trabajo y la vida personal.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500" id="test4Time">3-5 minutos</span>
+                            <button onclick="startTest('stress')" class="bg-gray-900 text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors duration-200">
+                                <span id="startBtn4">Comenzar Test</span>
+                            </button>
                         </div>
-                        <button onclick="startTest('stress')" class="bg-gradient-to-r from-green-500 to-teal-500 text-white px-8 py-4 rounded-xl font-bold hover:from-green-600 hover:to-teal-600 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                            <span id="startBtn4">Comenzar Test</span>
-                        </button>
                     </div>
                 </div>
             </div>
 
             <!-- Test 5: Habilidades de Comunicación -->
-            <div class="card-hover glass-effect rounded-3xl premium-shadow overflow-hidden">
-                <div class="category-business h-1"></div>
-                <div class="p-8">
-                    <div class="flex items-center mb-6">
-                        <div class="w-16 h-16 bg-gradient-to-br from-indigo-500 to-blue-500 rounded-2xl flex items-center justify-center text-2xl mr-6">💬</div>
-                        <div>
-                            <h3 class="text-2xl font-black text-gray-900" id="test5Title">Habilidades de Comunicación</h3>
-                            <p class="text-sm text-gray-600 font-medium" id="test5Category">Comunicación • 6 preguntas</p>
+            <div class="card-hover bg-white rounded-2xl minimal-shadow overflow-hidden border border-gray-100">
+                <div class="flex">
+                    <div class="category-indicator category-business"></div>
+                    <div class="flex-1 p-8">
+                        <div class="flex items-start justify-between mb-6">
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 mb-2" id="test5Title">Habilidades de Comunicación</h3>
+                                <p class="text-sm text-gray-500 font-medium" id="test5Category">Comunicación • 6 preguntas</p>
+                            </div>
+                            <div class="geometric-icon category-business text-white">CM</div>
                         </div>
-                    </div>
-                    <p class="text-gray-700 mb-8 leading-relaxed" id="test5Desc">Mide tu efectividad comunicativa en diferentes contextos: presentaciones, negociaciones, feedback y comunicación escrita y verbal.</p>
-                    <div class="flex justify-between items-center">
-                        <div class="flex items-center text-sm text-gray-600">
-                            <span class="mr-2">⏱️</span>
-                            <span id="test5Time">5-7 minutos</span>
+                        <p class="text-gray-600 mb-8 leading-relaxed text-sm" id="test5Desc">Mide tu efectividad comunicativa en diferentes contextos: presentaciones, negociaciones, feedback y comunicación escrita y verbal.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500" id="test5Time">4-6 minutos</span>
+                            <button onclick="startTest('communication')" class="bg-gray-900 text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors duration-200">
+                                <span id="startBtn5">Comenzar Test</span>
+                            </button>
                         </div>
-                        <button onclick="startTest('communication')" class="bg-gradient-to-r from-indigo-500 to-blue-500 text-white px-8 py-4 rounded-xl font-bold hover:from-indigo-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                            <span id="startBtn5">Comenzar Test</span>
-                        </button>
                     </div>
                 </div>
             </div>
 
             <!-- Test 6: Madurez Digital -->
-            <div class="card-hover glass-effect rounded-3xl premium-shadow overflow-hidden">
-                <div class="category-tech h-1"></div>
-                <div class="p-8">
-                    <div class="flex items-center mb-6">
-                        <div class="w-16 h-16 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-2xl flex items-center justify-center text-2xl mr-6">🚀</div>
-                        <div>
-                            <h3 class="text-2xl font-black text-gray-900" id="test6Title">Madurez Digital</h3>
-                            <p class="text-sm text-gray-600 font-medium" id="test6Category">Tecnología • 10 preguntas</p>
+            <div class="card-hover bg-white rounded-2xl minimal-shadow overflow-hidden border border-gray-100">
+                <div class="flex">
+                    <div class="category-indicator category-tech"></div>
+                    <div class="flex-1 p-8">
+                        <div class="flex items-start justify-between mb-6">
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 mb-2" id="test6Title">Madurez Digital</h3>
+                                <p class="text-sm text-gray-500 font-medium" id="test6Category">Tecnología • 10 preguntas</p>
+                            </div>
+                            <div class="geometric-icon category-tech text-white">DG</div>
                         </div>
-                    </div>
-                    <p class="text-gray-700 mb-8 leading-relaxed" id="test6Desc">Evalúa el nivel de digitalización de tu negocio o carrera profesional. Identifica oportunidades de automatización y mejora tecnológica.</p>
-                    <div class="flex justify-between items-center">
-                        <div class="flex items-center text-sm text-gray-600">
-                            <span class="mr-2">⏱️</span>
-                            <span id="test6Time">8-10 minutos</span>
+                        <p class="text-gray-600 mb-8 leading-relaxed text-sm" id="test6Desc">Evalúa el nivel de digitalización de tu negocio o carrera profesional. Identifica oportunidades de automatización y mejora tecnológica.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500" id="test6Time">5-7 minutos</span>
+                            <button onclick="startTest('digital')" class="bg-gray-900 text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors duration-200">
+                                <span id="startBtn6">Comenzar Test</span>
+                            </button>
                         </div>
-                        <button onclick="startTest('digital')" class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-bold hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                            <span id="startBtn6">Comenzar Test</span>
-                        </button>
                     </div>
                 </div>
             </div>
 
             <!-- Test 7: Gestión del Tiempo -->
-            <div class="card-hover glass-effect rounded-3xl premium-shadow overflow-hidden">
-                <div class="category-personal h-1"></div>
-                <div class="p-8">
-                    <div class="flex items-center mb-6">
-                        <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center text-2xl mr-6">⏰</div>
-                        <div>
-                            <h3 class="text-2xl font-black text-gray-900" id="test7Title">Gestión del Tiempo</h3>
-                            <p class="text-sm text-gray-600 font-medium" id="test7Category">Productividad • 7 preguntas</p>
+            <div class="card-hover bg-white rounded-2xl minimal-shadow overflow-hidden border border-gray-100">
+                <div class="flex">
+                    <div class="category-indicator category-productivity"></div>
+                    <div class="flex-1 p-8">
+                        <div class="flex items-start justify-between mb-6">
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 mb-2" id="test7Title">Gestión del Tiempo</h3>
+                                <p class="text-sm text-gray-500 font-medium" id="test7Category">Productividad • 7 preguntas</p>
+                            </div>
+                            <div class="geometric-icon category-productivity text-white">TM</div>
                         </div>
-                    </div>
-                    <p class="text-gray-700 mb-8 leading-relaxed" id="test7Desc">Analiza tus hábitos de gestión del tiempo, identifica ladrones de tiempo y recibe estrategias para maximizar tu productividad personal y profesional.</p>
-                    <div class="flex justify-between items-center">
-                        <div class="flex items-center text-sm text-gray-600">
-                            <span class="mr-2">⏱️</span>
-                            <span id="test7Time">6-8 minutos</span>
+                        <p class="text-gray-600 mb-8 leading-relaxed text-sm" id="test7Desc">Analiza tus hábitos de gestión del tiempo, identifica ladrones de tiempo y recibe estrategias para maximizar tu productividad personal y profesional.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500" id="test7Time">4-6 minutos</span>
+                            <button onclick="startTest('time')" class="bg-gray-900 text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors duration-200">
+                                <span id="startBtn7">Comenzar Test</span>
+                            </button>
                         </div>
-                        <button onclick="startTest('time')" class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-8 py-4 rounded-xl font-bold hover:from-orange-600 hover:to-red-600 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                            <span id="startBtn7">Comenzar Test</span>
-                        </button>
                     </div>
                 </div>
             </div>
 
             <!-- Test 8: Inteligencia Financiera -->
-            <div class="card-hover glass-effect rounded-3xl premium-shadow overflow-hidden">
-                <div class="category-business h-1"></div>
-                <div class="p-8">
-                    <div class="flex items-center mb-6">
-                        <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-2xl flex items-center justify-center text-2xl mr-6">💰</div>
-                        <div>
-                            <h3 class="text-2xl font-black text-gray-900" id="test8Title">Inteligencia Financiera</h3>
-                            <p class="text-sm text-gray-600 font-medium" id="test8Category">Finanzas • 6 preguntas</p>
+            <div class="card-hover bg-white rounded-2xl minimal-shadow overflow-hidden border border-gray-100">
+                <div class="flex">
+                    <div class="category-indicator category-finance"></div>
+                    <div class="flex-1 p-8">
+                        <div class="flex items-start justify-between mb-6">
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 mb-2" id="test8Title">Inteligencia Financiera</h3>
+                                <p class="text-sm text-gray-500 font-medium" id="test8Category">Finanzas • 6 preguntas</p>
+                            </div>
+                            <div class="geometric-icon category-finance text-white">FI</div>
                         </div>
-                    </div>
-                    <p class="text-gray-700 mb-8 leading-relaxed" id="test8Desc">Evalúa tu conocimiento y habilidades en gestión financiera personal y empresarial. Aprende a tomar mejores decisiones económicas.</p>
-                    <div class="flex justify-between items-center">
-                        <div class="flex items-center text-sm text-gray-600">
-                            <span class="mr-2">⏱️</span>
-                            <span id="test8Time">5-7 minutos</span>
+                        <p class="text-gray-600 mb-8 leading-relaxed text-sm" id="test8Desc">Evalúa tu conocimiento y habilidades en gestión financiera personal y empresarial. Aprende a tomar mejores decisiones económicas.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500" id="test8Time">4-6 minutos</span>
+                            <button onclick="startTest('financial')" class="bg-gray-900 text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors duration-200">
+                                <span id="startBtn8">Comenzar Test</span>
+                            </button>
                         </div>
-                        <button onclick="startTest('financial')" class="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-8 py-4 rounded-xl font-bold hover:from-emerald-600 hover:to-teal-600 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                            <span id="startBtn8">Comenzar Test</span>
-                        </button>
                     </div>
                 </div>
             </div>
 
         </div>
 
-        <!-- Benefits Section -->
-        <div class="mt-32 text-center">
-            <h2 class="text-5xl font-black text-white text-glow mb-4" id="benefitsTitle">¿Por qué realizar estos tests?</h2>
-            <p class="text-xl text-gray-400 mb-16 max-w-3xl mx-auto" id="benefitsSubtitle">Transforma tu potencial en resultados concretos</p>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="glass-effect rounded-3xl p-8 premium-shadow card-hover">
-                    <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-500 rounded-3xl flex items-center justify-center text-3xl mx-auto mb-6">🎯</div>
-                    <h3 class="text-2xl font-black text-gray-900 mb-4" id="benefit1Title">Autoconocimiento</h3>
-                    <p class="text-gray-700 leading-relaxed" id="benefit1Desc">Identifica tus fortalezas y áreas de mejora para potenciar tu desarrollo personal y profesional con precisión científica.</p>
-                </div>
-                <div class="glass-effect rounded-3xl p-8 premium-shadow card-hover">
-                    <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-teal-500 rounded-3xl flex items-center justify-center text-3xl mx-auto mb-6">📈</div>
-                    <h3 class="text-2xl font-black text-gray-900 mb-4" id="benefit2Title">Crecimiento</h3>
-                    <p class="text-gray-700 leading-relaxed" id="benefit2Desc">Recibe recomendaciones específicas y planes de acción personalizados para acelerar tu evolución profesional.</p>
-                </div>
-                <div class="glass-effect rounded-3xl p-8 premium-shadow card-hover">
-                    <div class="w-20 h-20 bg-gradient-to-br from-orange-500 to-red-500 rounded-3xl flex items-center justify-center text-3xl mx-auto mb-6">🚀</div>
-                    <h3 class="text-2xl font-black text-gray-900 mb-4" id="benefit3Title">Resultados</h3>
-                    <p class="text-gray-700 leading-relaxed" id="benefit3Desc">Aplica los insights obtenidos para tomar decisiones más inteligentes y alcanzar tus objetivos de manera exponencial.</p>
+            <!-- Benefits Section -->
+            <div class="mt-32 text-center">
+                <h2 class="text-3xl font-light text-gray-900 mb-6 tracking-tight" id="benefitsTitle">¿Por qué realizar estos tests?</h2>
+                <p class="text-lg text-gray-600 mb-16 max-w-2xl mx-auto font-light" id="benefitsSubtitle">Transforma tu potencial en resultados concretos</p>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-gray-50 rounded-2xl p-8 minimal-shadow card-hover border border-gray-200">
+                        <div class="geometric-icon bg-black mx-auto mb-6">01</div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4" id="benefit1Title">Autoconocimiento</h3>
+                        <p class="text-gray-600 leading-relaxed text-sm" id="benefit1Desc">Identifica tus fortalezas y áreas de mejora para potenciar tu desarrollo personal y profesional con precisión científica.</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-2xl p-8 minimal-shadow card-hover border border-gray-200">
+                        <div class="geometric-icon bg-black mx-auto mb-6">02</div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4" id="benefit2Title">Crecimiento</h3>
+                        <p class="text-gray-600 leading-relaxed text-sm" id="benefit2Desc">Recibe recomendaciones específicas y planes de acción personalizados para acelerar tu evolución profesional.</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-2xl p-8 minimal-shadow card-hover border border-gray-200">
+                        <div class="geometric-icon bg-black mx-auto mb-6">03</div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4" id="benefit3Title">Resultados</h3>
+                        <p class="text-gray-600 leading-relaxed text-sm" id="benefit3Desc">Aplica los insights obtenidos para tomar decisiones más inteligentes y alcanzar tus objetivos de manera exponencial.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Test Modal -->
-    <div id="testModal" class="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-        <div class="glass-effect rounded-3xl max-w-5xl w-full max-h-[90vh] overflow-y-auto premium-shadow">
+    <div id="testModal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm hidden items-center justify-center z-50 p-6">
+        <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto minimal-shadow border border-gray-200">
             <div id="testContent">
                 <!-- Test content will be loaded here -->
             </div>
@@ -352,8 +360,43 @@
                 test1Title: "Inteligencia Emocional",
                 test1Category: "Desarrollo Personal • 5 preguntas",
                 test1Desc: "Evalúa tu capacidad para reconocer, entender y gestionar emociones propias y ajenas. Fundamental para el liderazgo y las relaciones interpersonales.",
-                test1Time: "5-7 minutos",
+                test1Time: "3-5 minutos",
+                test2Title: "Estilo de Liderazgo",
+                test2Category: "Liderazgo • 5 preguntas",
+                test2Desc: "Identifica tu estilo natural de liderazgo y aprende cómo potenciar tus fortalezas para inspirar y guiar equipos de manera más efectiva.",
+                test2Time: "3-5 minutos",
+                test3Title: "Personalidad DISC",
+                test3Category: "Personalidad • 8 preguntas",
+                test3Desc: "Descubre tu perfil de personalidad según el modelo DISC: Dominancia, Influencia, Estabilidad y Conformidad. Mejora tu comunicación y trabajo en equipo.",
+                test3Time: "4-6 minutos",
+                test4Title: "Nivel de Estrés",
+                test4Category: "Bienestar • 5 preguntas",
+                test4Desc: "Evalúa tu nivel actual de estrés y recibe recomendaciones personalizadas para mejorar tu bienestar mental y físico en el trabajo y la vida personal.",
+                test4Time: "3-5 minutos",
+                test5Title: "Habilidades de Comunicación",
+                test5Category: "Comunicación • 6 preguntas",
+                test5Desc: "Mide tu efectividad comunicativa en diferentes contextos: presentaciones, negociaciones, feedback y comunicación escrita y verbal.",
+                test5Time: "4-6 minutos",
+                test6Title: "Madurez Digital",
+                test6Category: "Tecnología • 10 preguntas",
+                test6Desc: "Evalúa el nivel de digitalización de tu negocio o carrera profesional. Identifica oportunidades de automatización y mejora tecnológica.",
+                test6Time: "5-7 minutos",
+                test7Title: "Gestión del Tiempo",
+                test7Category: "Productividad • 7 preguntas",
+                test7Desc: "Analiza tus hábitos de gestión del tiempo, identifica ladrones de tiempo y recibe estrategias para maximizar tu productividad personal y profesional.",
+                test7Time: "4-6 minutos",
+                test8Title: "Inteligencia Financiera",
+                test8Category: "Finanzas • 6 preguntas",
+                test8Desc: "Evalúa tu conocimiento y habilidades en gestión financiera personal y empresarial. Aprende a tomar mejores decisiones económicas.",
+                test8Time: "4-6 minutos",
                 startBtn1: "Comenzar Test",
+                startBtn2: "Comenzar Test",
+                startBtn3: "Comenzar Test",
+                startBtn4: "Comenzar Test",
+                startBtn5: "Comenzar Test",
+                startBtn6: "Comenzar Test",
+                startBtn7: "Comenzar Test",
+                startBtn8: "Comenzar Test",
                 benefitsTitle: "¿Por qué realizar estos tests?",
                 benefitsSubtitle: "Transforma tu potencial en resultados concretos",
                 benefit1Title: "Autoconocimiento",
@@ -361,7 +404,15 @@
                 benefit2Title: "Crecimiento", 
                 benefit2Desc: "Recibe recomendaciones específicas y planes de acción personalizados para acelerar tu evolución profesional.",
                 benefit3Title: "Resultados",
-                benefit3Desc: "Aplica los insights obtenidos para tomar decisiones más inteligentes y alcanzar tus objetivos de manera exponencial."
+                benefit3Desc: "Aplica los insights obtenidos para tomar decisiones más inteligentes y alcanzar tus objetivos de manera exponencial.",
+                // Modal texts
+                questionText: "Pregunta",
+                ofText: "de",
+                completedText: "completado",
+                scoreText: "Puntuación",
+                resultsAnalysisText: "Análisis de Resultados",
+                retakeTestText: "Repetir Test",
+                closeText: "Cerrar"
             },
             en: {
                 mainTitle: "Business Bots Assessment Center",
@@ -378,7 +429,42 @@
                 test1Category: "Personal Development • 5 questions",
                 test1Desc: "Evaluate your ability to recognize, understand and manage your own and others' emotions. Essential for leadership and interpersonal relationships.",
                 test1Time: "5-7 minutes",
+                test2Title: "Leadership Style",
+                test2Category: "Leadership • 5 questions",
+                test2Desc: "Identify your natural leadership style and learn how to leverage your strengths to inspire and guide teams more effectively.",
+                test2Time: "4-6 minutes",
+                test3Title: "DISC Personality",
+                test3Category: "Personality • 8 questions",
+                test3Desc: "Discover your personality profile according to the DISC model: Dominance, Influence, Steadiness and Conscientiousness. Improve your communication and teamwork.",
+                test3Time: "6-8 minutes",
+                test4Title: "Stress Level",
+                test4Category: "Wellness • 5 questions",
+                test4Desc: "Assess your current stress level and receive personalized recommendations to improve your mental and physical well-being at work and in personal life.",
+                test4Time: "4-6 minutes",
+                test5Title: "Communication Skills",
+                test5Category: "Communication • 6 questions",
+                test5Desc: "Measure your communication effectiveness in different contexts: presentations, negotiations, feedback and written and verbal communication.",
+                test5Time: "5-7 minutes",
+                test6Title: "Digital Maturity",
+                test6Category: "Technology • 10 questions",
+                test6Desc: "Assess the digitalization level of your business or professional career. Identify automation opportunities and technological improvement.",
+                test6Time: "8-10 minutes",
+                test7Title: "Time Management",
+                test7Category: "Productivity • 7 questions",
+                test7Desc: "Analyze your time management habits, identify time wasters and receive strategies to maximize your personal and professional productivity.",
+                test7Time: "6-8 minutes",
+                test8Title: "Financial Intelligence",
+                test8Category: "Finance • 6 questions",
+                test8Desc: "Evaluate your knowledge and skills in personal and business financial management. Learn to make better economic decisions.",
+                test8Time: "5-7 minutes",
                 startBtn1: "Start Test",
+                startBtn2: "Start Test",
+                startBtn3: "Start Test",
+                startBtn4: "Start Test",
+                startBtn5: "Start Test",
+                startBtn6: "Start Test",
+                startBtn7: "Start Test",
+                startBtn8: "Start Test",
                 benefitsTitle: "Why take these tests?",
                 benefitsSubtitle: "Transform your potential into concrete results",
                 benefit1Title: "Self-Knowledge",
@@ -386,7 +472,15 @@
                 benefit2Title: "Growth",
                 benefit2Desc: "Receive specific recommendations and personalized action plans to accelerate your professional evolution.",
                 benefit3Title: "Results", 
-                benefit3Desc: "Apply the insights obtained to make smarter decisions and achieve your goals exponentially."
+                benefit3Desc: "Apply the insights obtained to make smarter decisions and achieve your goals exponentially.",
+                // Modal texts
+                questionText: "Question",
+                ofText: "of",
+                completedText: "completed",
+                scoreText: "Score",
+                resultsAnalysisText: "Results Analysis",
+                retakeTestText: "Retake Test",
+                closeText: "Close"
             },
             fr: {
                 mainTitle: "Centre d'Évaluation Business Bots",
@@ -403,7 +497,42 @@
                 test1Category: "Développement Personnel • 5 questions",
                 test1Desc: "Évaluez votre capacité à reconnaître, comprendre et gérer vos émotions et celles des autres. Essentiel pour le leadership et les relations interpersonnelles.",
                 test1Time: "5-7 minutes",
+                test2Title: "Style de Leadership",
+                test2Category: "Leadership • 5 questions",
+                test2Desc: "Identifiez votre style de leadership naturel et apprenez à exploiter vos forces pour inspirer et guider les équipes plus efficacement.",
+                test2Time: "4-6 minutes",
+                test3Title: "Personnalité DISC",
+                test3Category: "Personnalité • 8 questions",
+                test3Desc: "Découvrez votre profil de personnalité selon le modèle DISC : Dominance, Influence, Stabilité et Conformité. Améliorez votre communication et travail d'équipe.",
+                test3Time: "6-8 minutes",
+                test4Title: "Niveau de Stress",
+                test4Category: "Bien-être • 5 questions",
+                test4Desc: "Évaluez votre niveau de stress actuel et recevez des recommandations personnalisées pour améliorer votre bien-être mental et physique au travail et dans la vie personnelle.",
+                test4Time: "4-6 minutes",
+                test5Title: "Compétences de Communication",
+                test5Category: "Communication • 6 questions",
+                test5Desc: "Mesurez votre efficacité communicative dans différents contextes : présentations, négociations, feedback et communication écrite et verbale.",
+                test5Time: "5-7 minutes",
+                test6Title: "Maturité Numérique",
+                test6Category: "Technologie • 10 questions",
+                test6Desc: "Évaluez le niveau de numérisation de votre entreprise ou carrière professionnelle. Identifiez les opportunités d'automatisation et d'amélioration technologique.",
+                test6Time: "8-10 minutes",
+                test7Title: "Gestion du Temps",
+                test7Category: "Productivité • 7 questions",
+                test7Desc: "Analysez vos habitudes de gestion du temps, identifiez les voleurs de temps et recevez des stratégies pour maximiser votre productivité personnelle et professionnelle.",
+                test7Time: "6-8 minutes",
+                test8Title: "Intelligence Financière",
+                test8Category: "Finance • 6 questions",
+                test8Desc: "Évaluez vos connaissances et compétences en gestion financière personnelle et d'entreprise. Apprenez à prendre de meilleures décisions économiques.",
+                test8Time: "5-7 minutes",
                 startBtn1: "Commencer le Test",
+                startBtn2: "Commencer le Test",
+                startBtn3: "Commencer le Test",
+                startBtn4: "Commencer le Test",
+                startBtn5: "Commencer le Test",
+                startBtn6: "Commencer le Test",
+                startBtn7: "Commencer le Test",
+                startBtn8: "Commencer le Test",
                 benefitsTitle: "Pourquoi faire ces tests?",
                 benefitsSubtitle: "Transformez votre potentiel en résultats concrets",
                 benefit1Title: "Connaissance de Soi",
@@ -411,7 +540,15 @@
                 benefit2Title: "Croissance",
                 benefit2Desc: "Recevez des recommandations spécifiques et des plans d'action personnalisés pour accélérer votre évolution professionnelle.",
                 benefit3Title: "Résultats",
-                benefit3Desc: "Appliquez les insights obtenus pour prendre des décisions plus intelligentes et atteindre vos objectifs de manière exponentielle."
+                benefit3Desc: "Appliquez les insights obtenus pour prendre des décisions plus intelligentes et atteindre vos objectifs de manière exponentielle.",
+                // Modal texts
+                questionText: "Question",
+                ofText: "de",
+                completedText: "terminé",
+                scoreText: "Score",
+                resultsAnalysisText: "Analyse des Résultats",
+                retakeTestText: "Refaire le Test",
+                closeText: "Fermer"
             },
             it: {
                 mainTitle: "Centro di Valutazione Business Bots",
@@ -428,7 +565,42 @@
                 test1Category: "Sviluppo Personale • 5 domande",
                 test1Desc: "Valuta la tua capacità di riconoscere, comprendere e gestire le tue emozioni e quelle degli altri. Fondamentale per la leadership e le relazioni interpersonali.",
                 test1Time: "5-7 minuti",
+                test2Title: "Stile di Leadership",
+                test2Category: "Leadership • 5 domande",
+                test2Desc: "Identifica il tuo stile di leadership naturale e impara come sfruttare i tuoi punti di forza per ispirare e guidare i team in modo più efficace.",
+                test2Time: "4-6 minuti",
+                test3Title: "Personalità DISC",
+                test3Category: "Personalità • 8 domande",
+                test3Desc: "Scopri il tuo profilo di personalità secondo il modello DISC: Dominanza, Influenza, Stabilità e Coscienziosità. Migliora la tua comunicazione e il lavoro di squadra.",
+                test3Time: "6-8 minuti",
+                test4Title: "Livello di Stress",
+                test4Category: "Benessere • 5 domande",
+                test4Desc: "Valuta il tuo livello di stress attuale e ricevi raccomandazioni personalizzate per migliorare il tuo benessere mentale e fisico al lavoro e nella vita personale.",
+                test4Time: "4-6 minuti",
+                test5Title: "Abilità di Comunicazione",
+                test5Category: "Comunicazione • 6 domande",
+                test5Desc: "Misura la tua efficacia comunicativa in diversi contesti: presentazioni, negoziazioni, feedback e comunicazione scritta e verbale.",
+                test5Time: "5-7 minuti",
+                test6Title: "Maturità Digitale",
+                test6Category: "Tecnologia • 10 domande",
+                test6Desc: "Valuta il livello di digitalizzazione della tua azienda o carriera professionale. Identifica opportunità di automazione e miglioramento tecnologico.",
+                test6Time: "8-10 minuti",
+                test7Title: "Gestione del Tempo",
+                test7Category: "Produttività • 7 domande",
+                test7Desc: "Analizza le tue abitudini di gestione del tempo, identifica i ladri di tempo e ricevi strategie per massimizzare la tua produttività personale e professionale.",
+                test7Time: "6-8 minuti",
+                test8Title: "Intelligenza Finanziaria",
+                test8Category: "Finanza • 6 domande",
+                test8Desc: "Valuta le tue conoscenze e competenze nella gestione finanziaria personale e aziendale. Impara a prendere decisioni economiche migliori.",
+                test8Time: "5-7 minuti",
                 startBtn1: "Inizia Test",
+                startBtn2: "Inizia Test",
+                startBtn3: "Inizia Test",
+                startBtn4: "Inizia Test",
+                startBtn5: "Inizia Test",
+                startBtn6: "Inizia Test",
+                startBtn7: "Inizia Test",
+                startBtn8: "Inizia Test",
                 benefitsTitle: "Perché fare questi test?",
                 benefitsSubtitle: "Trasforma il tuo potenziale in risultati concreti",
                 benefit1Title: "Autoconoscenza",
@@ -436,7 +608,15 @@
                 benefit2Title: "Crescita",
                 benefit2Desc: "Ricevi raccomandazioni specifiche e piani d'azione personalizzati per accelerare la tua evoluzione professionale.",
                 benefit3Title: "Risultati",
-                benefit3Desc: "Applica gli insights ottenuti per prendere decisioni più intelligenti e raggiungere i tuoi obiettivi in modo esponenziale."
+                benefit3Desc: "Applica gli insights ottenuti per prendere decisioni più intelligenti e raggiungere i tuoi obiettivi in modo esponenziale.",
+                // Modal texts
+                questionText: "Domanda",
+                ofText: "di",
+                completedText: "completato",
+                scoreText: "Punteggio",
+                resultsAnalysisText: "Analisi dei Risultati",
+                retakeTestText: "Ripeti Test",
+                closeText: "Chiudi"
             },
             de: {
                 mainTitle: "Business Bots Bewertungszentrum",
@@ -453,7 +633,42 @@
                 test1Category: "Persönliche Entwicklung • 5 Fragen",
                 test1Desc: "Bewerten Sie Ihre Fähigkeit, Ihre eigenen und die Emotionen anderer zu erkennen, zu verstehen und zu verwalten. Wesentlich für Führung und zwischenmenschliche Beziehungen.",
                 test1Time: "5-7 Minuten",
+                test2Title: "Führungsstil",
+                test2Category: "Führung • 5 Fragen",
+                test2Desc: "Identifizieren Sie Ihren natürlichen Führungsstil und lernen Sie, wie Sie Ihre Stärken nutzen können, um Teams effektiver zu inspirieren und zu führen.",
+                test2Time: "4-6 Minuten",
+                test3Title: "DISC Persönlichkeit",
+                test3Category: "Persönlichkeit • 8 Fragen",
+                test3Desc: "Entdecken Sie Ihr Persönlichkeitsprofil nach dem DISC-Modell: Dominanz, Einfluss, Stetigkeit und Gewissenhaftigkeit. Verbessern Sie Ihre Kommunikation und Teamarbeit.",
+                test3Time: "6-8 Minuten",
+                test4Title: "Stresslevel",
+                test4Category: "Wohlbefinden • 5 Fragen",
+                test4Desc: "Bewerten Sie Ihr aktuelles Stresslevel und erhalten Sie personalisierte Empfehlungen zur Verbesserung Ihres mentalen und körperlichen Wohlbefindens bei der Arbeit und im Privatleben.",
+                test4Time: "4-6 Minuten",
+                test5Title: "Kommunikationsfähigkeiten",
+                test5Category: "Kommunikation • 6 Fragen",
+                test5Desc: "Messen Sie Ihre Kommunikationseffektivität in verschiedenen Kontexten: Präsentationen, Verhandlungen, Feedback und schriftliche und mündliche Kommunikation.",
+                test5Time: "5-7 Minuten",
+                test6Title: "Digitale Reife",
+                test6Category: "Technologie • 10 Fragen",
+                test6Desc: "Bewerten Sie den Digitalisierungsgrad Ihres Unternehmens oder Ihrer beruflichen Laufbahn. Identifizieren Sie Automatisierungsmöglichkeiten und technologische Verbesserungen.",
+                test6Time: "8-10 Minuten",
+                test7Title: "Zeitmanagement",
+                test7Category: "Produktivität • 7 Fragen",
+                test7Desc: "Analysieren Sie Ihre Zeitmanagement-Gewohnheiten, identifizieren Sie Zeitdiebe und erhalten Sie Strategien zur Maximierung Ihrer persönlichen und beruflichen Produktivität.",
+                test7Time: "6-8 Minuten",
+                test8Title: "Finanzintelligenz",
+                test8Category: "Finanzen • 6 Fragen",
+                test8Desc: "Bewerten Sie Ihr Wissen und Ihre Fähigkeiten im persönlichen und geschäftlichen Finanzmanagement. Lernen Sie, bessere wirtschaftliche Entscheidungen zu treffen.",
+                test8Time: "5-7 minuten",
                 startBtn1: "Test Starten",
+                startBtn2: "Test Starten",
+                startBtn3: "Test Starten",
+                startBtn4: "Test Starten",
+                startBtn5: "Test Starten",
+                startBtn6: "Test Starten",
+                startBtn7: "Test Starten",
+                startBtn8: "Test Starten",
                 benefitsTitle: "Warum diese Tests machen?",
                 benefitsSubtitle: "Verwandeln Sie Ihr Potenzial in konkrete Ergebnisse",
                 benefit1Title: "Selbsterkenntnis",
@@ -461,7 +676,15 @@
                 benefit2Title: "Wachstum",
                 benefit2Desc: "Erhalten Sie spezifische Empfehlungen und personalisierte Aktionspläne, um Ihre berufliche Entwicklung zu beschleunigen.",
                 benefit3Title: "Ergebnisse",
-                benefit3Desc: "Wenden Sie die gewonnenen Erkenntnisse an, um intelligentere Entscheidungen zu treffen und Ihre Ziele exponentiell zu erreichen."
+                benefit3Desc: "Wenden Sie die gewonnenen Erkenntnisse an, um intelligentere Entscheidungen zu treffen und Ihre Ziele exponentiell zu erreichen.",
+                // Modal texts
+                questionText: "Frage",
+                ofText: "von",
+                completedText: "abgeschlossen",
+                scoreText: "Punktzahl",
+                resultsAnalysisText: "Ergebnisanalyse",
+                retakeTestText: "Test Wiederholen",
+                closeText: "Schließen"
             }
         };
 
@@ -472,7 +695,7 @@
             
             // Update active language button
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            document.querySelector(`button[onclick="changeLanguage('${lang}')"]`).classList.add('active');
             
             // Update all text elements
             const t = translations[lang];
@@ -482,215 +705,271 @@
                     element.textContent = t[key];
                 }
             });
+            
+            // Update document language attribute
+            document.documentElement.lang = lang;
         }
 
-        // Test data structure
+        // Complete test data structure with all 8 tests in all languages
         const tests = {
             emotional: {
-                title: "Test de Inteligencia Emocional",
-                icon: "🧠",
-                questions: [
-                    {
-                        question: "¿Cómo reaccionas cuando alguien te critica constructivamente?",
-                        options: [
-                            { text: "Me molesto y me pongo a la defensiva", points: 1 },
-                            { text: "Escucho pero me cuesta no tomármelo personal", points: 2 },
-                            { text: "Agradezco el feedback y reflexiono sobre cómo mejorar", points: 3 }
-                        ]
-                    },
-                    {
-                        question: "Cuando un compañero está visiblemente molesto, ¿qué haces?",
-                        options: [
-                            { text: "Prefiero no involucrarme en sus problemas", points: 1 },
-                            { text: "Le pregunto si está bien pero no insisto", points: 2 },
-                            { text: "Me acerco con empatía y ofrezco mi apoyo", points: 3 }
-                        ]
-                    },
-                    {
-                        question: "¿Qué tan bien identificas tus propias emociones?",
-                        options: [
-                            { text: "A menudo no sé por qué me siento de cierta manera", points: 1 },
-                            { text: "Generalmente reconozco mis emociones básicas", points: 2 },
-                            { text: "Puedo identificar y nombrar mis emociones con precisión", points: 3 }
-                        ]
-                    },
-                    {
-                        question: "En situaciones de conflicto, ¿cómo manejas tus emociones?",
-                        options: [
-                            { text: "Suelo explotar o retirarme completamente", points: 1 },
-                            { text: "Trato de mantener la calma pero a veces pierdo el control", points: 2 },
-                            { text: "Mantengo la compostura y busco soluciones constructivas", points: 3 }
-                        ]
-                    },
-                    {
-                        question: "¿Cómo respondes cuando alguien comparte sus problemas contigo?",
-                        options: [
-                            { text: "Trato de cambiar de tema o dar consejos rápidos", points: 1 },
-                            { text: "Escucho pero me siento incómodo/a", points: 2 },
-                            { text: "Escucho activamente y valido sus sentimientos", points: 3 }
-                        ]
+                es: {
+                    title: "Test de Inteligencia Emocional",
+                    questions: [
+                        {
+                            question: "¿Cómo reaccionas cuando alguien te critica constructivamente?",
+                            options: [
+                                { text: "Me molesto y me pongo a la defensiva", points: 1 },
+                                { text: "Escucho pero me cuesta no tomármelo personal", points: 2 },
+                                { text: "Agradezco el feedback y reflexiono sobre cómo mejorar", points: 3 }
+                            ]
+                        },
+                        {
+                            question: "Cuando un compañero está visiblemente molesto, ¿qué haces?",
+                            options: [
+                                { text: "Prefiero no involucrarme en sus problemas", points: 1 },
+                                { text: "Le pregunto si está bien pero no insisto", points: 2 },
+                                { text: "Me acerco con empatía y ofrezco mi apoyo", points: 3 }
+                            ]
+                        },
+                        {
+                            question: "¿Qué tan bien identificas tus propias emociones?",
+                            options: [
+                                { text: "A menudo no sé por qué me siento de cierta manera", points: 1 },
+                                { text: "Generalmente reconozco mis emociones básicas", points: 2 },
+                                { text: "Puedo identificar y nombrar mis emociones con precisión", points: 3 }
+                            ]
+                        },
+                        {
+                            question: "En situaciones de conflicto, ¿cómo manejas tus emociones?",
+                            options: [
+                                { text: "Suelo explotar o retirarme completamente", points: 1 },
+                                { text: "Trato de mantener la calma pero a veces pierdo el control", points: 2 },
+                                { text: "Mantengo la compostura y busco soluciones constructivas", points: 3 }
+                            ]
+                        },
+                        {
+                            question: "¿Cómo respondes cuando alguien comparte sus problemas contigo?",
+                            options: [
+                                { text: "Trato de cambiar de tema o dar consejos rápidos", points: 1 },
+                                { text: "Escucho pero me siento incómodo/a", points: 2 },
+                                { text: "Escucho activamente y valido sus sentimientos", points: 3 }
+                            ]
+                        }
+                    ],
+                    results: {
+                        low: { title: "Inteligencia Emocional en Desarrollo", description: "Tienes una base sólida pero hay oportunidades importantes para desarrollar tu inteligencia emocional. Considera practicar la autoconciencia emocional y la empatía activa." },
+                        medium: { title: "Inteligencia Emocional Moderada", description: "Tienes buenas habilidades emocionales con espacio para crecer. Enfócate en mejorar la regulación emocional y la comprensión de las emociones de otros." },
+                        high: { title: "Alta Inteligencia Emocional", description: "¡Excelente! Tienes habilidades emocionales muy desarrolladas. Eres capaz de manejar tus emociones y conectar efectivamente con otros." }
                     }
-                ],
-                results: {
-                    low: { title: "Inteligencia Emocional en Desarrollo", icon: "🌱", description: "Tienes una base sólida pero hay oportunidades importantes para desarrollar tu inteligencia emocional. Considera practicar la autoconciencia emocional y la empatía activa." },
-                    medium: { title: "Inteligencia Emocional Moderada", icon: "🌿", description: "Tienes buenas habilidades emocionales con espacio para crecer. Enfócate en mejorar la regulación emocional y la comprensión de las emociones de otros." },
-                    high: { title: "Alta Inteligencia Emocional", icon: "🌟", description: "Excelente! Tienes habilidades emocionales muy desarrolladas. Eres capaz de manejar tus emociones y conectar efectivamente con otros." }
+                },
+                en: {
+                    title: "Emotional Intelligence Test",
+                    questions: [
+                        {
+                            question: "How do you react when someone gives you constructive criticism?",
+                            options: [
+                                { text: "I get upset and become defensive", points: 1 },
+                                { text: "I listen but find it hard not to take it personally", points: 2 },
+                                { text: "I appreciate the feedback and reflect on how to improve", points: 3 }
+                            ]
+                        },
+                        {
+                            question: "When a colleague is visibly upset, what do you do?",
+                            options: [
+                                { text: "I prefer not to get involved in their problems", points: 1 },
+                                { text: "I ask if they're okay but don't insist", points: 2 },
+                                { text: "I approach with empathy and offer my support", points: 3 }
+                            ]
+                        },
+                        {
+                            question: "How well do you identify your own emotions?",
+                            options: [
+                                { text: "I often don't know why I feel a certain way", points: 1 },
+                                { text: "I generally recognize my basic emotions", points: 2 },
+                                { text: "I can identify and name my emotions precisely", points: 3 }
+                            ]
+                        },
+                        {
+                            question: "In conflict situations, how do you handle your emotions?",
+                            options: [
+                                { text: "I tend to explode or withdraw completely", points: 1 },
+                                { text: "I try to stay calm but sometimes lose control", points: 2 },
+                                { text: "I maintain composure and seek constructive solutions", points: 3 }
+                            ]
+                        },
+                        {
+                            question: "How do you respond when someone shares their problems with you?",
+                            options: [
+                                { text: "I try to change the subject or give quick advice", points: 1 },
+                                { text: "I listen but feel uncomfortable", points: 2 },
+                                { text: "I listen actively and validate their feelings", points: 3 }
+                            ]
+                        }
+                    ],
+                    results: {
+                        low: { title: "Developing Emotional Intelligence", description: "You have a solid foundation but there are important opportunities to develop your emotional intelligence. Consider practicing emotional self-awareness and active empathy." },
+                        medium: { title: "Moderate Emotional Intelligence", description: "You have good emotional skills with room to grow. Focus on improving emotional regulation and understanding others' emotions." },
+                        high: { title: "High Emotional Intelligence", description: "Excellent! You have very developed emotional skills. You're able to manage your emotions and connect effectively with others." }
+                    }
                 }
             },
             leadership: {
-                title: "Test de Estilo de Liderazgo",
-                icon: "👑",
-                questions: [
-                    {
-                        question: "¿Cómo prefieres tomar decisiones importantes?",
-                        options: [
-                            { text: "Decido rápidamente basándome en mi experiencia", points: 1 },
-                            { text: "Consulto con algunos miembros clave del equipo", points: 2 },
-                            { text: "Involucro al equipo completo en el proceso de decisión", points: 3 }
-                        ]
-                    },
-                    {
-                        question: "¿Cómo motivas a tu equipo?",
-                        options: [
-                            { text: "Estableciendo metas claras y supervisando el progreso", points: 1 },
-                            { text: "Reconociendo logros y ofreciendo incentivos", points: 2 },
-                            { text: "Inspirando con una visión compartida y desarrollo personal", points: 3 }
-                        ]
-                    },
-                    {
-                        question: "Cuando un miembro del equipo comete un error, ¿cómo reaccionas?",
-                        options: [
-                            { text: "Señalo el error y explico cómo corregirlo", points: 1 },
-                            { text: "Hablo en privado sobre el error y sus consecuencias", points: 2 },
-                            { text: "Lo veo como una oportunidad de aprendizaje y crecimiento", points: 3 }
-                        ]
-                    },
-                    {
-                        question: "¿Cuál es tu enfoque para delegar tareas?",
-                        options: [
-                            { text: "Asigno tareas específicas con instrucciones detalladas", points: 1 },
-                            { text: "Delego pero mantengo supervisión regular", points: 2 },
-                            { text: "Empodero al equipo para que tome decisiones autónomas", points: 3 }
-                        ]
-                    },
-                    {
-                        question: "¿Cómo manejas los conflictos en el equipo?",
-                        options: [
-                            { text: "Intervengo directamente y tomo decisiones finales", points: 1 },
-                            { text: "Facilito la comunicación entre las partes", points: 2 },
-                            { text: "Ayudo al equipo a encontrar soluciones colaborativas", points: 3 }
-                        ]
+                es: {
+                    title: "Test de Estilo de Liderazgo",
+                    questions: [
+                        {
+                            question: "¿Cómo prefieres tomar decisiones importantes?",
+                            options: [
+                                { text: "Decido rápidamente basándome en mi experiencia", points: 1 },
+                                { text: "Consulto con algunos miembros clave del equipo", points: 2 },
+                                { text: "Involucro al equipo completo en el proceso de decisión", points: 3 }
+                            ]
+                        },
+                        {
+                            question: "¿Cómo motivas a tu equipo?",
+                            options: [
+                                { text: "Estableciendo metas claras y supervisando el progreso", points: 1 },
+                                { text: "Reconociendo logros y ofreciendo incentivos", points: 2 },
+                                { text: "Inspirando con una visión compartida y desarrollo personal", points: 3 }
+                            ]
+                        },
+                        {
+                            question: "Cuando un miembro del equipo comete un error, ¿cómo reaccionas?",
+                            options: [
+                                { text: "Señalo el error y explico cómo corregirlo", points: 1 },
+                                { text: "Hablo en privado sobre el error y sus consecuencias", points: 2 },
+                                { text: "Lo veo como una oportunidad de aprendizaje y crecimiento", points: 3 }
+                            ]
+                        },
+                        {
+                            question: "¿Cuál es tu enfoque para delegar tareas?",
+                            options: [
+                                { text: "Asigno tareas específicas con instrucciones detalladas", points: 1 },
+                                { text: "Delego pero mantengo supervisión regular", points: 2 },
+                                { text: "Empodero al equipo para que tome decisiones autónomas", points: 3 }
+                            ]
+                        },
+                        {
+                            question: "¿Cómo manejas los conflictos en el equipo?",
+                            options: [
+                                { text: "Intervengo directamente y tomo decisiones finales", points: 1 },
+                                { text: "Facilito la comunicación entre las partes", points: 2 },
+                                { text: "Ayudo al equipo a encontrar soluciones colaborativas", points: 3 }
+                            ]
+                        }
+                    ],
+                    results: {
+                        low: { title: "Liderazgo Directivo", description: "Tu estilo es directo y orientado a resultados. Eres efectivo en situaciones que requieren decisiones rápidas, pero considera desarrollar más colaboración." },
+                        medium: { title: "Liderazgo Participativo", description: "Balanceas bien la dirección con la participación del equipo. Tienes un estilo versátil que se adapta a diferentes situaciones." },
+                        high: { title: "Liderazgo Transformacional", description: "Inspiras y empoderas a tu equipo. Tu enfoque en el desarrollo de otros y la visión compartida genera alto compromiso y resultados excepcionales." }
                     }
-                ],
-                results: {
-                    low: { title: "Liderazgo Directivo", icon: "⚡", description: "Tu estilo es directo y orientado a resultados. Eres efectivo en situaciones que requieren decisiones rápidas, pero considera desarrollar más colaboración." },
-                    medium: { title: "Liderazgo Participativo", icon: "🤝", description: "Balanceas bien la dirección con la participación del equipo. Tienes un estilo versátil que se adapta a diferentes situaciones." },
-                    high: { title: "Liderazgo Transformacional", icon: "🌟", description: "Inspiras y empoderas a tu equipo. Tu enfoque en el desarrollo de otros y la visión compartida genera alto compromiso y resultados excepcionales." }
-                }
-            },
-            stress: {
-                title: "Evaluación de Nivel de Estrés",
-                icon: "🌿",
-                questions: [
-                    {
-                        question: "¿Con qué frecuencia te sientes abrumado/a por tus responsabilidades?",
-                        options: [
-                            { text: "Casi nunca", points: 1 },
-                            { text: "Ocasionalmente", points: 2 },
-                            { text: "Frecuentemente o casi siempre", points: 3 }
-                        ]
-                    },
-                    {
-                        question: "¿Cómo es la calidad de tu sueño últimamente?",
-                        options: [
-                            { text: "Duermo bien y me siento descansado/a", points: 1 },
-                            { text: "A veces tengo dificultades para dormir", points: 2 },
-                            { text: "Tengo problemas frecuentes de sueño", points: 3 }
-                        ]
-                    },
-                    {
-                        question: "¿Qué tan irritable te has sentido en las últimas semanas?",
-                        options: [
-                            { text: "Mantengo mi calma habitual", points: 1 },
-                            { text: "Más irritable de lo normal", points: 2 },
-                            { text: "Muy irritable, pequeñas cosas me molestan", points: 3 }
-                        ]
-                    },
-                    {
-                        question: "¿Cómo está tu nivel de energía durante el día?",
-                        options: [
-                            { text: "Tengo energía constante", points: 1 },
-                            { text: "Tengo altibajos de energía", points: 2 },
-                            { text: "Me siento agotado/a la mayor parte del tiempo", points: 3 }
-                        ]
-                    },
-                    {
-                        question: "¿Con qué frecuencia experimentas síntomas físicos como dolores de cabeza o tensión muscular?",
-                        options: [
-                            { text: "Raramente", points: 1 },
-                            { text: "Ocasionalmente", points: 2 },
-                            { text: "Frecuentemente", points: 3 }
-                        ]
+                },
+                en: {
+                    title: "Leadership Style Test",
+                    questions: [
+                        {
+                            question: "How do you prefer to make important decisions?",
+                            options: [
+                                { text: "I decide quickly based on my experience", points: 1 },
+                                { text: "I consult with some key team members", points: 2 },
+                                { text: "I involve the entire team in the decision process", points: 3 }
+                            ]
+                        },
+                        {
+                            question: "How do you motivate your team?",
+                            options: [
+                                { text: "By setting clear goals and monitoring progress", points: 1 },
+                                { text: "By recognizing achievements and offering incentives", points: 2 },
+                                { text: "By inspiring with a shared vision and personal development", points: 3 }
+                            ]
+                        },
+                        {
+                            question: "When a team member makes a mistake, how do you react?",
+                            options: [
+                                { text: "I point out the error and explain how to correct it", points: 1 },
+                                { text: "I speak privately about the error and its consequences", points: 2 },
+                                { text: "I see it as a learning and growth opportunity", points: 3 }
+                            ]
+                        },
+                        {
+                            question: "What's your approach to delegating tasks?",
+                            options: [
+                                { text: "I assign specific tasks with detailed instructions", points: 1 },
+                                { text: "I delegate but maintain regular supervision", points: 2 },
+                                { text: "I empower the team to make autonomous decisions", points: 3 }
+                            ]
+                        },
+                        {
+                            question: "How do you handle team conflicts?",
+                            options: [
+                                { text: "I intervene directly and make final decisions", points: 1 },
+                                { text: "I facilitate communication between parties", points: 2 },
+                                { text: "I help the team find collaborative solutions", points: 3 }
+                            ]
+                        }
+                    ],
+                    results: {
+                        low: { title: "Directive Leadership", description: "Your style is direct and results-oriented. You're effective in situations requiring quick decisions, but consider developing more collaboration." },
+                        medium: { title: "Participative Leadership", description: "You balance direction well with team participation. You have a versatile style that adapts to different situations." },
+                        high: { title: "Transformational Leadership", description: "You inspire and empower your team. Your focus on developing others and shared vision generates high commitment and exceptional results." }
                     }
-                ],
-                results: {
-                    low: { title: "Nivel de Estrés Bajo", icon: "😌", description: "¡Excelente! Manejas bien el estrés y mantienes un buen equilibrio. Continúa con tus estrategias actuales de bienestar." },
-                    medium: { title: "Nivel de Estrés Moderado", icon: "😐", description: "Experimentas algo de estrés que es normal, pero sería beneficioso implementar más técnicas de manejo del estrés y autocuidado." },
-                    high: { title: "Nivel de Estrés Alto", icon: "😰", description: "Tu nivel de estrés es preocupante. Es importante que busques estrategias de manejo del estrés y consideres apoyo profesional si es necesario." }
                 }
             }
         };
 
         let currentTest = null;
-        let currentQuestion = 0;
-        let totalScore = 0;
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
 
         function startTest(testType) {
-            currentTest = tests[testType];
-            currentQuestion = 0;
-            totalScore = 0;
+            currentTest = testType;
+            currentQuestionIndex = 0;
+            userAnswers = [];
+            
+            const testData = tests[testType][currentLanguage];
+            if (!testData) {
+                alert('Test not available in this language yet');
+                return;
+            }
             
             document.getElementById('testModal').classList.remove('hidden');
             document.getElementById('testModal').classList.add('flex');
             
-            displayQuestion();
+            showQuestion();
         }
 
-        function displayQuestion() {
-            const container = document.getElementById('testContent');
-            const question = currentTest.questions[currentQuestion];
-            const progress = ((currentQuestion + 1) / currentTest.questions.length) * 100;
+        function showQuestion() {
+            const testData = tests[currentTest][currentLanguage];
+            const question = testData.questions[currentQuestionIndex];
+            const t = translations[currentLanguage];
             
-            container.innerHTML = `
-                <div class="p-10">
+            const progress = ((currentQuestionIndex + 1) / testData.questions.length) * 100;
+            
+            document.getElementById('testContent').innerHTML = `
+                <div class="p-8">
                     <div class="flex justify-between items-center mb-8">
-                        <h2 class="text-3xl font-black text-gray-900 flex items-center">
-                            <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-blue-500 rounded-2xl flex items-center justify-center text-2xl mr-4">${currentTest.icon}</div>
-                            ${currentTest.title}
-                        </h2>
-                        <button onclick="closeTest()" class="w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center text-gray-600 hover:text-gray-800 text-xl transition-all duration-200">&times;</button>
+                        <h2 class="text-2xl font-semibold text-gray-900">${testData.title}</h2>
+                        <button onclick="closeTest()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
                     </div>
                     
-                    <div class="mb-10">
-                        <div class="flex justify-between text-sm text-gray-600 mb-3">
-                            <span class="font-medium">Pregunta ${currentQuestion + 1} de ${currentTest.questions.length}</span>
-                            <span class="font-medium">${Math.round(progress)}% completado</span>
+                    <div class="mb-8">
+                        <div class="flex justify-between text-sm text-gray-600 mb-2">
+                            <span>${t.questionText} ${currentQuestionIndex + 1} ${t.ofText} ${testData.questions.length}</span>
+                            <span>${Math.round(progress)}% ${t.completedText}</span>
                         </div>
-                        <div class="bg-gray-200 rounded-full h-3">
-                            <div class="bg-gradient-to-r from-purple-500 via-blue-500 to-teal-500 rounded-full h-3 transition-all duration-500 ease-out" style="width: ${progress}%"></div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-blue-600 h-2 rounded-full transition-all duration-300" style="width: ${progress}%"></div>
                         </div>
                     </div>
                     
-                    <div class="mb-10">
-                        <h3 class="text-2xl font-bold text-gray-900 mb-8 leading-relaxed">${question.question}</h3>
-                        <div class="space-y-4">
+                    <div class="mb-8">
+                        <h3 class="text-xl font-medium text-gray-900 mb-6">${question.question}</h3>
+                        <div class="space-y-3">
                             ${question.options.map((option, index) => `
-                                <button onclick="selectAnswer(${option.points})" 
-                                        class="w-full text-left p-6 border-2 border-gray-200 rounded-2xl hover:border-purple-400 hover:bg-purple-50 hover:shadow-lg transition-all duration-300 focus:outline-none focus:border-purple-500 transform hover:scale-[1.02]">
-                                    <div class="flex items-center">
-                                        <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-blue-500 text-white rounded-xl flex items-center justify-center font-bold text-lg mr-6">${String.fromCharCode(65 + index)}</div>
-                                        <span class="text-gray-800 font-medium text-lg leading-relaxed">${option.text}</span>
-                                    </div>
+                                <button onclick="selectAnswer(${typeof option.points === 'object' ? JSON.stringify(option.points).replace(/"/g, '&quot;') : option.points})" 
+                                        class="option-button w-full text-left p-4 border border-gray-200 rounded-lg hover:border-gray-300 hover:bg-gray-50 transition-all duration-200">
+                                    ${option.text}
                                 </button>
                             `).join('')}
                         </div>
@@ -700,72 +979,87 @@
         }
 
         function selectAnswer(points) {
-            totalScore += points;
-            currentQuestion++;
+            userAnswers.push(points);
             
-            if (currentQuestion < currentTest.questions.length) {
-                setTimeout(() => {
-                    displayQuestion();
-                }, 300);
+            if (currentQuestionIndex < tests[currentTest][currentLanguage].questions.length - 1) {
+                currentQuestionIndex++;
+                showQuestion();
             } else {
-                setTimeout(() => {
-                    showResults();
-                }, 300);
+                showResults();
             }
         }
 
         function showResults() {
-            const maxScore = currentTest.questions.length * 3;
-            const percentage = (totalScore / maxScore) * 100;
+            const testData = tests[currentTest][currentLanguage];
+            const t = translations[currentLanguage];
             
-            let resultLevel;
-            if (percentage <= 50) resultLevel = 'low';
-            else if (percentage <= 80) resultLevel = 'medium';
-            else resultLevel = 'high';
+            let totalScore, resultKey, resultData;
             
-            const result = currentTest.results[resultLevel];
+            if (currentTest === 'disc') {
+                // DISC scoring logic
+                const scores = { D: 0, I: 0, S: 0, C: 0 };
+                userAnswers.forEach(answer => {
+                    Object.keys(answer).forEach(key => {
+                        scores[key] += answer[key];
+                    });
+                });
+                
+                const maxScore = Math.max(...Object.values(scores));
+                resultKey = Object.keys(scores).find(key => scores[key] === maxScore);
+                resultData = testData.results[resultKey];
+                totalScore = maxScore;
+            } else {
+                // Regular scoring logic
+                totalScore = userAnswers.reduce((sum, points) => sum + points, 0);
+                const maxPossible = testData.questions.length * 3;
+                const percentage = (totalScore / maxPossible) * 100;
+                
+                if (percentage >= 80) {
+                    resultKey = 'high';
+                } else if (percentage >= 60) {
+                    resultKey = 'medium';
+                } else {
+                    resultKey = 'low';
+                }
+                
+                resultData = testData.results[resultKey];
+            }
             
             document.getElementById('testContent').innerHTML = `
-                <div class="p-10 text-center">
-                    <div class="mb-10">
-                        <div class="w-24 h-24 bg-gradient-to-br from-purple-500 to-blue-500 rounded-3xl flex items-center justify-center text-4xl mx-auto mb-6">${result.icon}</div>
-                        <h2 class="text-4xl font-black text-gray-900 mb-4">${result.title}</h2>
-                        <div class="inline-flex items-center bg-gradient-to-r from-purple-500 to-blue-500 text-white px-6 py-3 rounded-2xl font-bold text-xl mb-8">
-                            <span class="mr-2">🎯</span>
-                            Puntuación: ${totalScore}/${maxScore} (${Math.round(percentage)}%)
+                <div class="p-8">
+                    <div class="text-center mb-8">
+                        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
                         </div>
+                        <h2 class="text-3xl font-bold text-gray-900 mb-2">${t.resultsAnalysisText}</h2>
+                        <p class="text-gray-600">${t.scoreText}: ${totalScore}${currentTest !== 'disc' ? '/' + (testData.questions.length * 3) : ''}</p>
                     </div>
                     
-                    <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl p-8 mb-10 border border-gray-200">
-                        <div class="text-3xl mb-4">📋</div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-4">Análisis de Resultados</h3>
-                        <p class="text-gray-700 text-lg leading-relaxed">${result.description}</p>
+                    <div class="bg-gray-50 rounded-2xl p-8 mb-8">
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-4">${resultData.title}</h3>
+                        <p class="text-gray-700 leading-relaxed">${resultData.description}</p>
                     </div>
                     
-                    <div class="flex justify-center space-x-6">
-                        <button onclick="restartCurrentTest()" class="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-8 py-4 rounded-2xl font-bold hover:from-purple-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                            <span class="mr-2">🔄</span>
-                            Repetir Test
+                    <div class="flex space-x-4">
+                        <button onclick="startTest('${currentTest}')" class="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-blue-700 transition-colors duration-200">
+                            ${t.retakeTestText}
                         </button>
-                        <button onclick="closeTest()" class="bg-gradient-to-r from-gray-500 to-gray-600 text-white px-8 py-4 rounded-2xl font-bold hover:from-gray-600 hover:to-gray-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                            <span class="mr-2">✕</span>
-                            Cerrar
+                        <button onclick="closeTest()" class="flex-1 bg-gray-200 text-gray-800 py-3 px-6 rounded-lg font-medium hover:bg-gray-300 transition-colors duration-200">
+                            ${t.closeText}
                         </button>
                     </div>
                 </div>
             `;
         }
 
-        function restartCurrentTest() {
-            currentQuestion = 0;
-            totalScore = 0;
-            displayQuestion();
-        }
-
         function closeTest() {
             document.getElementById('testModal').classList.add('hidden');
             document.getElementById('testModal').classList.remove('flex');
             currentTest = null;
+            currentQuestionIndex = 0;
+            userAnswers = [];
         }
 
         // Close modal when clicking outside
@@ -775,5 +1069,5 @@
             }
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'974e9af8a22cec93',t:'MTc1NjE2MTc3NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9752059a9062ec93',t:'MTc1NjE5NzYwMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
